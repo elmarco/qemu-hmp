@@ -1,0 +1,194 @@
+HMP Command Coverage Report
+===========================
+
+Main commands: 57/113 implemented
+Info subcommands: 51/71 implemented
+Total: 108/184 implemented (59%)
+
+Main commands:
+  [-] help|? -- show the help
+  [x] commit -- commit changes to the disk images (if -snapshot is used) or backing files
+  [x] quit|q -- quit the emulator
+  [x] exit_preconfig -- exit the preconfig state
+  [x] block_resize -- resize a block image
+  [x] block_stream -- copy data from a backing file into a block device
+  [x] block_job_set_speed -- set maximum speed for a background block operation
+  [x] block_job_cancel -- stop an active background block operation (use -f
+  [x] block_job_complete -- stop an active background block operation
+  [x] block_job_pause -- pause an active background block operation
+  [x] block_job_resume -- resume a paused background block operation
+  [x] eject -- eject a removable medium (use -f to force it)
+  [x] drive_del -- remove host block device
+  [x] change -- change a removable medium, optional format, use -f to force the operation
+  [x] screendump -- save screen from head 'head' of display device 'device'in specified format 'format' as image 'filename'.Currently only 'png' and 'ppm' formats are supported.
+  [x] logfile -- output logs to 'filename'
+  [x] trace-event -- changes status of a specific trace event (vcpu: vCPU to set, default is all)
+  [x] trace-file -- open, close, or flush trace file, or set a new file name
+  [x] log -- activate logging of the specified items
+  [x] savevm -- save a VM snapshot. If no tag is provided, a new snapshot is created
+  [x] loadvm -- restore a VM snapshot from its tag
+  [x] delvm -- delete a VM snapshot from its tag
+  [x] one-insn-per-tb -- run emulation with one guest instruction per translation block
+  [x] stop|s -- stop emulation
+  [x] cont|c -- resume emulation
+  [x] system_wakeup -- wakeup guest from suspend
+  [x] gdbserver -- start gdbserver on given device (default 'tcp::1234'), stop with 'none'
+  [x] x -- virtual memory dump starting at 'addr'
+  [x] xp -- physical memory dump starting at 'addr'
+  [x] gpa2hva -- print the host virtual address corresponding to a guest physical address
+  [x] gpa2hpa -- print the host physical address corresponding to a guest physical address
+  [x] gva2gpa -- print the guest physical address corresponding to a guest virtual address
+  [x] print|p -- print expression value (use $reg for CPU register access)
+  [x] i -- I/O port read
+  [x] o -- I/O port write
+  [x] sendkey -- send keys to the VM (e.g. 'sendkey ctrl-alt-f1', default hold time=100 ms)
+  [x] sync-profile -- enable, disable or reset synchronization profiling. With no arguments, prints whether profiling is on or off.
+  [x] system_reset -- reset the system
+  [x] system_powerdown -- send system power down event
+  [x] sum -- compute the checksum of a memory region
+  [x] device_add -- add device, like -device on the command line
+  [x] device_del -- remove device
+  [x] cpu -- set the default CPU
+  [x] mouse_move -- send mouse move events
+  [x] mouse_button -- change mouse button state (1=L, 2=M, 4=R)
+  [x] mouse_set -- set which mouse device receives events
+  [-] wavcapture -- capture audio to a wave file (deprecated, default frequency=44100 bits=16 channels=2)
+  [-] stopcapture -- stop capture (deprecated)
+  [x] memsave -- save to disk virtual memory dump starting at 'addr' of size 'size'
+  [x] pmemsave -- save to disk physical memory dump starting at 'addr' of size 'size'
+  [x] boot_set -- define new values for the boot device list
+  [x] nmi -- inject an NMI
+  [x] ringbuf_write -- Write to a ring buffer character device
+  [x] ringbuf_read -- Read from a ring buffer character device
+  [x] announce_self -- Trigger GARP/RARP announcements
+  [x] migrate -- migrate to URI (using -d to not wait for completion)
+  [x] migrate_cancel -- cancel the current VM migration
+  [x] migrate_continue -- Continue migration from the given paused state
+  [x] migrate_incoming -- Continue an incoming migration from an -incoming defer
+  [x] migrate_recover -- Continue a paused incoming postcopy migration
+  [x] migrate_pause -- Pause an ongoing migration (postcopy-only)
+  [x] migrate_set_capability -- Enable/Disable the usage of a capability for migration
+  [x] migrate_set_parameter -- Set the parameter for migration
+  [x] migrate_start_postcopy -- Followup to a migration command to switch the migration to postcopy mode. The postcopy-ram capability must be set on both source and destination before the original migration command .
+  [x] x_colo_lost_heartbeat -- Tell COLO that heartbeat is lost,
+  [x] client_migrate_info -- set migration information for remote display
+  [x] dump-guest-memory -- dump guest memory into file 'filename'.
+  [x] dump-skeys -- Save guest storage keys into file 'filename'.
+  [x] migration_mode -- Enables or disables migration mode
+  [x] snapshot_blkdev -- initiates a live snapshot
+  [x] snapshot_blkdev_internal -- take an internal snapshot of device.
+  [x] snapshot_delete_blkdev_internal -- delete an internal snapshot of device.
+  [x] drive_mirror -- initiates live storage
+  [x] drive_backup -- initiates a point-in-time
+  [x] drive_add -- add drive to PCI storage controller (-n mode via blockdev-add)
+  [x] pcie_aer_inject_error -- inject pcie aer error (via x-pcie-aer-inject-error QMP)
+  [x] netdev_add -- add host network device
+  [x] netdev_del -- remove host network device
+  [x] object_add -- create QOM object
+  [x] object_del -- destroy QOM object
+  [x] hostfwd_add -- redirect TCP, UDP or UNIX connections from host to guest (requires -net user)
+  [x] hostfwd_remove -- remove host-to-guest TCP or UDP redirection
+  [x] balloon -- request VM to change its memory allocation (in MB)
+  [x] set_link -- change the link status of a network adapter
+  [x] watchdog_action -- change watchdog action
+  [x] nbd_server_start -- serve block devices on the given host and port
+  [x] nbd_server_add -- export a block device via NBD
+  [x] nbd_server_remove -- remove an export previously exposed via NBD
+  [x] nbd_server_stop -- stop serving block devices using the NBD protocol
+  [x] mce -- inject a MCE on the given CPU [and broadcast to other CPUs with -b option]
+  [x] getfd -- receive a file descriptor via SCM rights and assign it a name
+  [x] closefd -- close a file descriptor previously passed via SCM rights
+  [x] block_set_io_throttle -- change I/O throttle limits for a block drive
+  [x] set_password -- set spice/vnc password
+  [x] expire_password -- set spice/vnc password expire-time
+  [x] chardev-add -- add chardev
+  [x] chardev-change -- change chardev
+  [x] chardev-remove -- remove chardev
+  [x] chardev-send-break -- send a break on chardev
+  [-] qemu-io -- run a qemu-io command on a block device (no QMP equivalent)
+  [x] qom-list -- list QOM properties
+  [x] qom-get -- print QOM property
+  [x] qom-set -- set QOM property.
+  [x] replay_break -- set breakpoint at the specified instruction count
+  [x] replay_delete_break -- remove replay breakpoint
+  [x] replay_seek -- replay execution to the specified instruction count
+  [x] calc_dirty_rate -- start a round of guest dirty rate measurement (using -r to
+  [x] set_vcpu_dirty_limit -- set dirty page rate limit, use cpu_index to set limit
+  [x] cancel_vcpu_dirty_limit -- cancel dirty page rate limit, use cpu_index to cancel
+  [x] info -- show various information about the system state
+  [x] dumpdtb -- dump the FDT in dtb format to 'filename'
+  [x] xen-event-inject -- inject event channel
+  [x] xen-event-list -- list event channel state
+
+Info subcommands:
+  [x] info version -- show the version of QEMU
+  [-] info network -- show the network state (no QMP equivalent)
+  [x] info chardev -- show the character devices
+  [x] info block -- show info of one block device or all block devices (-n: show named nodes; -v: show details)
+  [x] info blockstats -- show block device statistics
+  [x] info block-jobs -- show progress of ongoing block device operations
+  [x] info registers -- show the cpu registers (-a: show register info for all cpus; vcpu: specific vCPU to query; show the current CPU's registers if no argument is specified)
+  [x] info lapic -- show local apic state (apic-id: local apic to read, default is which of current CPU)
+  [x] info cpus -- show infos for each CPU
+  [-] info history -- show the command line history
+  [x] info irq -- show the interrupts statistics (if available)
+  [x] info pic -- show PIC state
+  [x] info pci -- show PCI info
+  [x] info tlb -- show virtual to physical memory mappings
+  [x] info mem -- show the active virtual memory mappings
+  [x] info mtree -- show memory tree (-f: dump flat view for address spaces;-d: dump dispatch tree, valid with -f only);-o: dump region owners/parents;-D: dump disabled regions
+  [x] info jit -- show dynamic compiler info
+  [x] info sync-profile -- show synchronization profiling info, up to max entries (default: 10), sorted by total wait time. (-m: sort by mean wait time; -n: do not coalesce objects with the same call site)
+  [x] info accel -- show accelerator statistics
+  [x] info kvm -- show KVM information
+  [x] info accelerators -- show present and enabled information
+  [x] info numa -- show NUMA information
+  [x] info usb -- show guest USB devices
+  [x] info usbhost -- show host USB devices
+  [-] info capture -- show capture information (deprecated)
+  [x] info snapshots -- show the currently saved VM snapshots
+  [x] info status -- show the current VM status (running|paused)
+  [x] info mice -- show which guest mouse is receiving events
+  [x] info vnc -- show the vnc server status
+  [x] info spice -- show the spice server status
+  [x] info name -- show the current VM name
+  [x] info uuid -- show the current VM UUID
+  [x] info usernet -- show user network stack connection states
+  [x] info migrate -- show migration status (-a: all, dump all status)
+  [x] info migrate_capabilities -- show current migration capabilities
+  [x] info migrate_parameters -- show current migration parameters
+  [x] info balloon -- show balloon information
+  [x] info qtree -- show device tree (-b: brief, omit properties)
+  [x] info qdm -- show qdev device model list
+  [x] info qom-tree -- show QOM composition tree
+  [x] info roms -- show roms
+  [x] info trace-events -- show available trace-events & their state (name: event name pattern; vcpu: vCPU to query, default is any)
+  [x] info tpm -- show the TPM device
+  [x] info memdev -- show memory backends
+  [x] info memory-devices -- show memory devices
+  [x] info iothreads -- show iothreads
+  [x] info rocker -- Show rocker switch
+  [x] info rocker-ports -- Show rocker ports
+  [x] info rocker-of-dpa-flows -- Show rocker OF-DPA flow tables
+  [x] info rocker-of-dpa-groups -- Show rocker OF-DPA groups
+  [x] info skeys -- Display the value of a storage key
+  [x] info cmma -- Display the values of the CMMA storage attributes for a range of pages
+  [x] info dump -- Display the latest dump status
+  [x] info ramblock -- Display system ramblock information
+  [x] info hotpluggable-cpus -- Show information about hotpluggable CPUs
+  [x] info vm-generation-id -- Show Virtual Machine Generation ID
+  [x] info memory_size_summary -- show the amount of initially allocated and present hotpluggable (if enabled) memory in bytes.
+  [x] info sev -- show SEV information
+  [x] info replay -- show record/replay information
+  [x] info dirty_rate -- show dirty rate information
+  [x] info vcpu_dirty_limit -- show dirty page limit information of all vCPU
+  [x] info sgx -- show intel SGX information
+  [x] info via -- show guest mos6522 VIA devices
+  [x] info stats -- show statistics for the given target (vm or vcpu); optionally filter byname (comma-separated list, or * for all) and provider
+  [x] info virtio -- List all available virtio devices
+  [x] info virtio-status -- Display status of a given virtio device
+  [x] info virtio-queue-status -- Display status of a given virtio queue
+  [x] info virtio-vhost-queue-status -- Display status of a given vhost queue
+  [x] info virtio-queue-element -- Display element of a given virtio queue
+  [x] info cryptodev -- show the crypto devices
+  [x] info firmware-log -- show the firmware (ovmf) debug log
